@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Clean XP-style personal portfolio for No Jyeon."
+    />
+    <title>No Jyeon | Clean XP Portfolio</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="desktop-shell">
+      <header class="taskbar" data-taskbar>
+        <button class="start-button" type="button" aria-expanded="false" aria-controls="main-nav" data-start-button>
+          Start
+        </button>
+        <nav class="main-nav" id="main-nav" aria-label="Primary">
+          <a href="#profile">Profile</a>
+          <a href="#experience">Experience</a>
+          <a href="#skills">Skills</a>
+          <a href="#games">Games</a>
+        </nav>
+      </header>
+
+      <main class="workspace">
+        <section class="hero window">
+          <div class="window-bar">
+            <span class="window-title">No Jyeon</span>
+            <span class="window-badge">Clean XP</span>
+          </div>
+          <div class="hero-grid">
+            <div class="avatar" aria-hidden="true">NJ</div>
+            <div class="hero-copy">
+              <p class="eyebrow">Engineer / System Software</p>
+              <h1>Slow developer</h1>
+              <p class="lede">
+                BSP engineer for Android &amp; Linux Kernel at Samsung Electronics, MX사업부, System개발팀.
+              </p>
+              <p class="meta">Email: <a href="mailto:jyeon.noh@samsung.com">jyeon.noh@samsung.com</a></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-grid">
+          <article class="window" id="profile">
+            <div class="window-bar">
+              <span class="window-title">Profile</span>
+            </div>
+            <div class="window-body">
+              <p>Engineer / 시스템 소프트웨어</p>
+              <p>MX사업부, System개발팀</p>
+              <p>LSI SoC BSP maintenance</p>
+            </div>
+          </article>
+
+          <article class="window" id="experience">
+            <div class="window-bar">
+              <span class="window-title">Experience</span>
+            </div>
+            <div class="window-body">
+              <p>BSP engineer for Android &amp; Linux Kernel</p>
+              <p>Focus: maintenance, stability, and platform support.</p>
+            </div>
+          </article>
+
+          <article class="window" id="skills">
+            <div class="window-bar">
+              <span class="window-title">Skills</span>
+            </div>
+            <div class="window-body chips">
+              <span>C/C++</span>
+              <span>Python</span>
+              <span>BSP</span>
+              <span>Android</span>
+              <span>Linux Kernel</span>
+            </div>
+          </article>
+
+          <article class="window games-window" id="games">
+            <div class="window-bar">
+              <span class="window-title">Games</span>
+            </div>
+            <div class="window-body">
+              <div class="game-card">
+                <div>
+                  <p class="game-label">Tetris</p>
+                  <p class="game-copy">Game shell is ready. Full gameplay comes in the next loop.</p>
+                </div>
+                <button class="game-button" type="button" disabled>
+                  Coming soon
+                </button>
+              </div>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
