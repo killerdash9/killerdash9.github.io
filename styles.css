@@ -413,6 +413,22 @@ a {
     width: 100%;
   }
 
+  .game-actions {
+    order: -2;
+  }
+
+  .touch-controls {
+    order: -1;
+  }
+
+  .scoreboard {
+    order: 0;
+  }
+
+  .preview-card {
+    order: 1;
+  }
+
   .game-actions,
   .touch-controls {
     grid-template-columns: repeat(2, minmax(0, 1fr));
