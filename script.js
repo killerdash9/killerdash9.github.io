@@ -89,6 +89,31 @@ if (gameApi && gameCanvas && gameStatus && gameScore && gameHighScore && gameSta
     ctx.strokeRect(px + 0.5, py + 0.5, cellSize - 1, cellSize - 1);
   }
 
+  function drawPiece(piece, opacity = 1) {
+    if (!piece) {
+      return;
+    }
+
+    ctx.save();
+    ctx.globalAlpha = opacity;
+
+    for (let row = 0; row < piece.matrix.length; row += 1) {
+      for (let col = 0; col < piece.matrix[row].length; col += 1) {
+        if (!piece.matrix[row][col]) {
+          continue;
+        }
+
+        const x = piece.x + col;
+        const y = piece.y + row;
+        if (y >= 0) {
+          drawCell(x, y, colors[piece.type] || "#d9d9d9");
+        }
+      }
+    }
+
+    ctx.restore();
+  }
+
   function drawBoardBackground() {
     ctx.fillStyle = "#10203d";
     ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
@@ -138,21 +163,10 @@ if (gameApi && gameCanvas && gameStatus && gameScore && gameHighScore && gameSta
       }
     }
 
-    if (gameState.activePiece) {
-      const { activePiece } = gameState;
-      for (let row = 0; row < activePiece.matrix.length; row += 1) {
-        for (let col = 0; col < activePiece.matrix[row].length; col += 1) {
-          if (!activePiece.matrix[row][col]) {
-            continue;
-          }
+    drawPiece(gameApi.getGhostPiece(gameState), 0.28);
 
-          const x = activePiece.x + col;
-          const y = activePiece.y + row;
-          if (y >= 0) {
-            drawCell(x, y, colors[activePiece.type] || "#d9d9d9");
-          }
-        }
-      }
+    if (gameState.activePiece) {
+      drawPiece(gameState.activePiece, 1);
     }
 
     if (gameState.status !== "playing") {

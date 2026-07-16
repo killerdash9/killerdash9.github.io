@@ -331,6 +331,24 @@ function hardDrop(state) {
   return lockActivePiece(next);
 }
 
+function getGhostPiece(state) {
+  if (!state.activePiece) {
+    return null;
+  }
+
+  const ghost = clonePiece(state.activePiece);
+
+  while (canPlace(state.board, {
+    ...ghost,
+    y: ghost.y + 1,
+  })) {
+    ghost.y += 1;
+  }
+
+  ghost.transparent = true;
+  return ghost;
+}
+
 const api = {
   createGameState,
   startGame,
@@ -342,6 +360,7 @@ const api = {
   rotateActivePiece,
   tickGame,
   hardDrop,
+  getGhostPiece,
   BOARD_WIDTH,
   BOARD_HEIGHT,
 };
