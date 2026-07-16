@@ -413,16 +413,12 @@ a {
     width: 100%;
   }
 
-  .game-actions {
+  .touch-controls {
     order: -2;
   }
 
-  .touch-controls {
+  .game-actions {
     order: -1;
-  }
-
-  .scoreboard {
-    order: 0;
   }
 
   .preview-card {
@@ -432,5 +428,16 @@ a {
   .game-actions,
   .touch-controls {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .touch-controls .action-button {
+    border-radius: 0.4rem;
+    background: linear-gradient(180deg, #f2f7ff, #d5e1ef);
+    color: #15304f;
+    min-height: 2.95rem;
+    padding-inline: 0.7rem;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.08);
   }
 }
