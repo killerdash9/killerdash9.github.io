@@ -56,6 +56,7 @@ a {
 }
 
 .start-button,
+.action-button,
 .game-button {
   border: 2px solid;
   border-color: var(--window-light) var(--window-shadow) var(--window-shadow) var(--window-light);
@@ -72,6 +73,7 @@ a {
 }
 
 .start-button:active,
+.action-button:active,
 .game-button:active {
   border-color: var(--window-shadow) var(--window-light) var(--window-light) var(--window-shadow);
   transform: translateY(1px);
@@ -241,6 +243,94 @@ a {
   min-width: 9rem;
 }
 
+.game-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
+  gap: 1rem;
+  align-items: start;
+}
+
+.game-stage {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: center;
+}
+
+.game-board {
+  width: min(100%, 240px);
+  aspect-ratio: 1 / 2;
+  display: block;
+  background: #12233f;
+  border: 2px solid;
+  border-color: var(--window-shadow) var(--window-light) var(--window-light) var(--window-shadow);
+  image-rendering: pixelated;
+}
+
+.game-note {
+  margin: 0;
+  color: var(--muted);
+  text-align: center;
+}
+
+.game-panel {
+  display: grid;
+  gap: 1rem;
+}
+
+.scoreboard {
+  margin: 0;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.scoreboard > div {
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #9e9e9e;
+  background: linear-gradient(180deg, #ffffff, #efe8d4);
+}
+
+.scoreboard dt {
+  margin: 0 0 0.2rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.scoreboard dd {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.game-actions,
+.touch-controls {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.game-actions {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.touch-controls {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.action-button {
+  width: 100%;
+  min-width: 0;
+  background: linear-gradient(180deg, #6fd7f0, #3ca5db);
+  color: #08283f;
+  border-color: var(--window-light) var(--window-shadow) var(--window-shadow) var(--window-light);
+  touch-action: manipulation;
+}
+
+.action-button:hover,
+.action-button:focus-visible {
+  filter: brightness(1.05);
+}
+
 @media (max-width: 800px) {
   .main-nav {
     display: none;
@@ -265,6 +355,10 @@ a {
     grid-template-columns: 1fr;
     justify-items: start;
   }
+
+  .game-shell {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 480px) {
@@ -284,5 +378,10 @@ a {
 
   .game-button {
     width: 100%;
+  }
+
+  .game-actions,
+  .touch-controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

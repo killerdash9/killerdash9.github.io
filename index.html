@@ -3,12 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="Personal portfolio for Jeong Yeon Noh."
-    />
+    <meta name="description" content="Personal portfolio for Jeong Yeon Noh." />
     <title>Jeong Yeon Noh | Portfolio</title>
     <link rel="stylesheet" href="styles.css" />
+    <script src="game.js" defer></script>
     <script src="script.js" defer></script>
   </head>
   <body>
@@ -18,15 +16,18 @@
           Start
         </button>
         <nav class="main-nav" id="main-nav" aria-label="Primary">
-          <a href="#profile">Profile</a>
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
           <a href="#experience">Experience</a>
-          <a href="#skills">Skills</a>
+          <a href="#research">Research</a>
+          <a href="#contact">Contact</a>
           <a href="#games">Games</a>
         </nav>
       </header>
 
       <main class="workspace">
-        <section class="hero window">
+        <section class="hero window" id="home">
           <div class="window-bar">
             <span class="window-title">Jeong Yeon Noh</span>
             <span class="window-badge">Portfolio</span>
@@ -45,14 +46,24 @@
         </section>
 
         <section class="content-grid">
-          <article class="window" id="profile">
+          <article class="window" id="about">
             <div class="window-bar">
-              <span class="window-title">Profile</span>
+              <span class="window-title">About</span>
             </div>
             <div class="window-body">
-              <p>Engineer / 시스템 소프트웨어</p>
-              <p>MX사업부, System개발팀</p>
+              <p>I work on BSP for Android &amp; Linux Kernel.</p>
+              <p>Focus: maintenance, stability, and platform support.</p>
+              <p>Clean, practical work over flashy presentation.</p>
+            </div>
+          </article>
+
+          <article class="window" id="projects">
+            <div class="window-bar">
+              <span class="window-title">Projects</span>
+            </div>
+            <div class="window-body">
               <p>LSI SoC BSP maintenance</p>
+              <p>Android and Linux kernel support across platform updates.</p>
             </div>
           </article>
 
@@ -61,8 +72,28 @@
               <span class="window-title">Experience</span>
             </div>
             <div class="window-body">
+              <p>Engineer / 시스템 소프트웨어</p>
+              <p>Samsung Electronics, MX사업부, System개발팀</p>
               <p>BSP engineer for Android &amp; Linux Kernel</p>
-              <p>Focus: maintenance, stability, and platform support.</p>
+            </div>
+          </article>
+
+          <article class="window" id="research">
+            <div class="window-bar">
+              <span class="window-title">Research</span>
+            </div>
+            <div class="window-body">
+              <p>[사람 확인 필요] Research details were not confirmed in cv.jpeg.</p>
+            </div>
+          </article>
+
+          <article class="window" id="contact">
+            <div class="window-bar">
+              <span class="window-title">Contact</span>
+            </div>
+            <div class="window-body">
+              <p>Email</p>
+              <p><a href="mailto:jyeon.noh@samsung.com">jyeon.noh@samsung.com</a></p>
             </div>
           </article>
 
@@ -82,16 +113,52 @@
           <article class="window games-window" id="games">
             <div class="window-bar">
               <span class="window-title">Games</span>
+              <span class="window-badge">Tetris</span>
             </div>
             <div class="window-body">
-              <div class="game-card">
-                <div>
-                  <p class="game-label">Tetris</p>
-                  <p class="game-copy">Game shell is ready. Full gameplay comes in the next loop.</p>
+              <div class="game-shell">
+                <div class="game-stage">
+                  <canvas
+                    class="game-board"
+                    data-game-board
+                    width="240"
+                    height="480"
+                    aria-label="Tetris board"
+                  ></canvas>
+                  <p class="game-note">Arrow keys, WASD, Space, or the on-screen controls.</p>
                 </div>
-                <button class="game-button" type="button" disabled>
-                  Coming soon
-                </button>
+
+                <div class="game-panel">
+                  <dl class="scoreboard">
+                    <div>
+                      <dt>Status</dt>
+                      <dd data-game-status>Idle</dd>
+                    </div>
+                    <div>
+                      <dt>Score</dt>
+                      <dd data-game-score>0</dd>
+                    </div>
+                    <div>
+                      <dt>High score</dt>
+                      <dd data-game-high-score>0</dd>
+                    </div>
+                  </dl>
+
+                  <div class="game-actions">
+                    <button class="action-button" type="button" data-game-start>Start game</button>
+                    <button class="action-button" type="button" data-game-pause>Pause</button>
+                    <button class="action-button" type="button" data-game-restart>Restart</button>
+                  </div>
+
+                  <div class="touch-controls" aria-label="Touch controls">
+                    <button class="action-button" type="button" data-action="left">Left</button>
+                    <button class="action-button" type="button" data-action="rotate">Rotate</button>
+                    <button class="action-button" type="button" data-action="right">Right</button>
+                    <button class="action-button" type="button" data-action="down">Down</button>
+                    <button class="action-button" type="button" data-action="drop">Drop</button>
+                    <button class="action-button" type="button" data-action="pause">Pause</button>
+                  </div>
+                </div>
               </div>
             </div>
           </article>
