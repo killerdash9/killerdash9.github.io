@@ -106,6 +106,8 @@ function createGameState(options = {}) {
     linesCleared: 0,
     board: createEmptyBoard(),
     activePiece: null,
+    holdPiece: null,
+    canHold: true,
     nextPiece,
     pieceQueue,
   };
@@ -184,6 +186,7 @@ function spawnNextPiece(state) {
   nextState.status = "playing";
   nextState.isPaused = false;
   nextState.isGameOver = false;
+  nextState.canHold = true;
 
   if (!canPlace(nextState.board, activePiece)) {
     nextState.status = "game-over";
@@ -208,6 +211,7 @@ function startGame(state) {
   fresh.linesCleared = 0;
   fresh.isPaused = false;
   fresh.isGameOver = false;
+  fresh.canHold = true;
   fresh.status = "playing";
   return spawnNextPiece(fresh);
 }
@@ -331,6 +335,60 @@ function hardDrop(state) {
   return lockActivePiece(next);
 }
 
+function getGhostPiece(state) {
+  if (!state.activePiece) {
+    return null;
+  }
+
+  const ghost = clonePiece(state.activePiece);
+
+  while (canPlace(state.board, {
+    ...ghost,
+    y: ghost.y + 1,
+  })) {
+    ghost.y += 1;
+  }
+
+  ghost.transparent = true;
+  return ghost;
+}
+
+function getNextPreviewPiece(state) {
+  return clonePiece(state.nextPiece);
+}
+
+function getHoldPreviewPiece(state) {
+  return clonePiece(state.holdPiece);
+}
+
+function holdActivePiece(state) {
+  if (!state.activePiece || state.status !== "playing" || !state.canHold) {
+    return state;
+  }
+
+  const nextState = cloneGameState(state);
+  const currentHoldType = nextState.holdPiece ? nextState.holdPiece.type : null;
+  nextState.holdPiece = createPiece(state.activePiece.type);
+  nextState.canHold = false;
+
+  if (!currentHoldType) {
+    nextState.activePiece = clonePiece(nextState.nextPiece) || createPiece(takeNextType(nextState.pieceQueue));
+    const nextType = takeNextType(nextState.pieceQueue);
+    nextState.nextPiece = createPiece(nextType);
+  } else {
+    nextState.activePiece = createPiece(currentHoldType);
+  }
+
+  if (!canPlace(nextState.board, nextState.activePiece)) {
+    nextState.status = "game-over";
+    nextState.isGameOver = true;
+    nextState.isPaused = false;
+    return nextState;
+  }
+
+  return nextState;
+}
+
 const api = {
   createGameState,
   startGame,
@@ -342,6 +400,10 @@ const api = {
   rotateActivePiece,
   tickGame,
   hardDrop,
+  getGhostPiece,
+  getNextPreviewPiece,
+  getHoldPreviewPiece,
+  holdActivePiece,
   BOARD_WIDTH,
   BOARD_HEIGHT,
 };

@@ -20,17 +20,21 @@
 
 - Mode: `CODEX_FALLBACK`
 - Claude model: `Sonnet 5`
+- Current commit: `91d31ab`
+- Last normal commit·URL: `2a54d5a` / `https://killerdash9.github.io`
+- Git status: `main...origin/main [ahead 1]`, untracked `cv.jpeg`, `github_token.txt`
+- Rollback criteria: revert only the last next-piece preview / hold-save change in `index.html`, `game.js`, `script.js`, and `styles.css` if it breaks rendering or controls.
 - Last test: `PASS (node tests/*.test.js, node --check, local HTTP 200, browser 375px/768px/1440px, game UI controls)`
 
 ## Current State
 
 - 상태: `DEPLOY_APPROVAL_REQUIRED`
-- 완료 루프: `5`
-- 다음 루프: `6`
+- 완료 루프: `7`
+- 다음 루프: `8`
 - Retry: `0`
-- fingerprint: `responsive-tetris-browser-200`
+- fingerprint: `next-hold-browser-200`
 - blocker: `none`
-- 마지막 정상 commit·URL: `[사람 확인 필요]`
+- 마지막 정상 commit·URL: `2a54d5a / https://killerdash9.github.io`
 
 ## Acceptance
 
@@ -60,6 +64,6 @@
 
 | Loop | 상태 | 실행 모드·모델 | 변경 파일 | 테스트 결과 | Retry | 다음 작업 |
 |---|---|---|---|---|---|---|
+| 7 | `PASSED` | `CODEX_FALLBACK` / `Sonnet 5` | `index.html`, `game.js`, `script.js`, `styles.css`, `tests/tetris-preview.test.js`, `tests/tetris-hold.test.js`, `MEMORY.md`, `AORR_LOG.md` | `PASS` | `0` | `DEPLOY_APPROVAL_REQUIRED` |
+| 6 | `PASSED` | `CODEX_FALLBACK` / `Sonnet 5` | `game.js`, `script.js`, `MEMORY.md` | `PASS` | `0` | `DEPLOY_APPROVAL_REQUIRED` |
 | 5 | `PASSED` | `CODEX_FALLBACK` / `Sonnet 5` | `index.html`, `styles.css`, `script.js`, `game.js`, `tests/*.js` | `PASS` | `0` | `DEPLOY_APPROVAL_REQUIRED` |
-| 4 | `PASSED` | `CODEX_FALLBACK` / `Sonnet 5` | `index.html`, `styles.css`, `script.js` | `PASS` | `0` | `Loop 5: add Tetris gameplay` |
-| 3 | `READY` | `CODEX_WORKER + CLAUDE_VERIFIER` / `Sonnet 5` | `AORR.md`, `MEMORY.md` | `PASS` | `0` | `Step 3: Self-Correcting TDD 설계` |

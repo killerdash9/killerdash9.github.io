@@ -277,6 +277,39 @@ a {
   gap: 1rem;
 }
 
+.preview-card {
+  border: 1px solid #9e9e9e;
+  background: linear-gradient(180deg, #fbfbfb, #e8edf7);
+  padding: 0.7rem;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.preview-card__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.preview-card__bar h2 {
+  margin: 0;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.preview-board {
+  width: 100%;
+  max-width: 96px;
+  aspect-ratio: 1;
+  display: block;
+  margin: 0 auto;
+  background: #10203d;
+  border: 2px solid;
+  border-color: var(--window-shadow) var(--window-light) var(--window-light) var(--window-shadow);
+}
+
 .scoreboard {
   margin: 0;
   display: grid;
@@ -310,7 +343,7 @@ a {
 }
 
 .game-actions {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .touch-controls {

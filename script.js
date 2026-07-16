@@ -18,18 +18,24 @@ if (startButton && mainNav) {
 
 const gameApi = window.TetrisGame;
 const gameCanvas = document.querySelector("[data-game-board]");
+const holdPieceCanvas = document.querySelector("[data-hold-piece-board]");
 const gameStatus = document.querySelector("[data-game-status]");
 const gameScore = document.querySelector("[data-game-score]");
 const gameHighScore = document.querySelector("[data-game-high-score]");
+const nextPieceCanvas = document.querySelector("[data-next-piece-board]");
 const gameStartButton = document.querySelector("[data-game-start]");
+const gameHoldButton = document.querySelector("[data-game-hold]");
 const gamePauseButton = document.querySelector("[data-game-pause]");
 const gameRestartButton = document.querySelector("[data-game-restart]");
 const touchButtons = document.querySelectorAll("[data-action]");
 
-if (gameApi && gameCanvas && gameStatus && gameScore && gameHighScore && gameStartButton && gamePauseButton && gameRestartButton) {
+if (gameApi && gameCanvas && holdPieceCanvas && nextPieceCanvas && gameStatus && gameScore && gameHighScore && gameStartButton && gameHoldButton && gamePauseButton && gameRestartButton) {
   const ctx = gameCanvas.getContext("2d");
+  const holdCtx = holdPieceCanvas.getContext("2d");
+  const nextCtx = nextPieceCanvas.getContext("2d");
   const storageKey = "jeong-yeon-noh-tetris-high-score";
   const cellSize = gameCanvas.width / gameApi.BOARD_WIDTH;
+  const previewCellSize = nextPieceCanvas.width / 4;
   const colors = {
     I: "#5de1ff",
     J: "#507bff",
@@ -89,6 +95,98 @@ if (gameApi && gameCanvas && gameStatus && gameScore && gameHighScore && gameSta
     ctx.strokeRect(px + 0.5, py + 0.5, cellSize - 1, cellSize - 1);
   }
 
+  function drawPreviewCell(x, y, color) {
+    const px = x * previewCellSize;
+    const py = y * previewCellSize;
+
+    nextCtx.fillStyle = color;
+    nextCtx.fillRect(px + 1, py + 1, previewCellSize - 2, previewCellSize - 2);
+    nextCtx.strokeStyle = "rgba(255, 255, 255, 0.18)";
+    nextCtx.strokeRect(px + 0.5, py + 0.5, previewCellSize - 1, previewCellSize - 1);
+  }
+
+  function drawPreviewBoard(context, canvas, piece) {
+    context.fillStyle = "#10203d";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+
+    context.strokeStyle = "rgba(255, 255, 255, 0.05)";
+    for (let x = 0; x <= 4; x += 1) {
+      context.beginPath();
+      context.moveTo(x * previewCellSize + 0.5, 0);
+      context.lineTo(x * previewCellSize + 0.5, canvas.height);
+      context.stroke();
+    }
+
+    for (let y = 0; y <= 4; y += 1) {
+      context.beginPath();
+      context.moveTo(0, y * previewCellSize + 0.5);
+      context.lineTo(canvas.width, y * previewCellSize + 0.5);
+      context.stroke();
+    }
+
+    if (!piece) {
+      return;
+    }
+
+    const width = piece.matrix[0].length;
+    const height = piece.matrix.length;
+    const offsetX = Math.floor((4 - width) / 2);
+    const offsetY = Math.floor((4 - height) / 2);
+
+    context.save();
+    context.globalAlpha = 0.92;
+
+    for (let row = 0; row < piece.matrix.length; row += 1) {
+      for (let col = 0; col < piece.matrix[row].length; col += 1) {
+        if (!piece.matrix[row][col]) {
+          continue;
+        }
+
+        const px = (offsetX + col) * previewCellSize;
+        const py = (offsetY + row) * previewCellSize;
+        context.fillStyle = colors[piece.type] || "#d9d9d9";
+        context.fillRect(px + 1, py + 1, previewCellSize - 2, previewCellSize - 2);
+        context.strokeStyle = "rgba(255, 255, 255, 0.18)";
+        context.strokeRect(px + 0.5, py + 0.5, previewCellSize - 1, previewCellSize - 1);
+      }
+    }
+
+    context.restore();
+  }
+
+  function drawPiece(piece, opacity = 1) {
+    if (!piece) {
+      return;
+    }
+
+    ctx.save();
+    ctx.globalAlpha = opacity;
+
+    for (let row = 0; row < piece.matrix.length; row += 1) {
+      for (let col = 0; col < piece.matrix[row].length; col += 1) {
+        if (!piece.matrix[row][col]) {
+          continue;
+        }
+
+        const x = piece.x + col;
+        const y = piece.y + row;
+        if (y >= 0) {
+          drawCell(x, y, colors[piece.type] || "#d9d9d9");
+        }
+      }
+    }
+
+    ctx.restore();
+  }
+
+  function drawNextPreview(piece) {
+    drawPreviewBoard(nextCtx, nextPieceCanvas, piece);
+  }
+
+  function drawHoldPreview(piece) {
+    drawPreviewBoard(holdCtx, holdPieceCanvas, piece);
+  }
+
   function drawBoardBackground() {
     ctx.fillStyle = "#10203d";
     ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
@@ -138,22 +236,14 @@ if (gameApi && gameCanvas && gameStatus && gameScore && gameHighScore && gameSta
       }
     }
 
-    if (gameState.activePiece) {
-      const { activePiece } = gameState;
-      for (let row = 0; row < activePiece.matrix.length; row += 1) {
-        for (let col = 0; col < activePiece.matrix[row].length; col += 1) {
-          if (!activePiece.matrix[row][col]) {
-            continue;
-          }
+    drawPiece(gameApi.getGhostPiece(gameState), 0.28);
 
-          const x = activePiece.x + col;
-          const y = activePiece.y + row;
-          if (y >= 0) {
-            drawCell(x, y, colors[activePiece.type] || "#d9d9d9");
-          }
-        }
-      }
+    if (gameState.activePiece) {
+      drawPiece(gameState.activePiece, 1);
     }
+
+    drawNextPreview(gameApi.getNextPreviewPiece(gameState));
+    drawHoldPreview(gameApi.getHoldPreviewPiece(gameState));
 
     if (gameState.status !== "playing") {
       const label =
@@ -208,6 +298,10 @@ if (gameApi && gameCanvas && gameStatus && gameScore && gameHighScore && gameSta
     applyState(gameApi.restartGame(gameState));
   }
 
+  function hold() {
+    applyState(gameApi.holdActivePiece(gameState));
+  }
+
   function stepDown() {
     if (gameState.status === "playing") {
       applyState(gameApi.tickGame(gameState));
@@ -258,6 +352,7 @@ if (gameApi && gameCanvas && gameStatus && gameScore && gameHighScore && gameSta
   }
 
   gameStartButton.addEventListener("click", startOrResume);
+  gameHoldButton.addEventListener("click", hold);
   gamePauseButton.addEventListener("click", pauseOrResume);
   gameRestartButton.addEventListener("click", restart);
 
@@ -278,6 +373,7 @@ if (gameApi && gameCanvas && gameStatus && gameScore && gameHighScore && gameSta
       key === "s" ||
       key === "arrowup" ||
       key === "w" ||
+      key === "shift" ||
       key === " " ||
       key === "spacebar" ||
       key === "p";
@@ -296,6 +392,8 @@ if (gameApi && gameCanvas && gameStatus && gameScore && gameHighScore && gameSta
       stepDown();
     } else if (key === "arrowup" || key === "w") {
       rotate();
+    } else if (key === "shift") {
+      hold();
     } else if (key === " " || key === "spacebar") {
       drop();
     } else if (key === "p") {

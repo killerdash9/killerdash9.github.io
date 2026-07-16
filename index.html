@@ -129,6 +129,32 @@
                 </div>
 
                 <div class="game-panel">
+                  <section class="preview-card" aria-labelledby="hold-piece-title">
+                    <div class="preview-card__bar">
+                      <h2 id="hold-piece-title">Hold</h2>
+                    </div>
+                    <canvas
+                      class="preview-board"
+                      data-hold-piece-board
+                      width="96"
+                      height="96"
+                      aria-label="Held Tetris piece preview"
+                    ></canvas>
+                  </section>
+
+                  <section class="preview-card" aria-labelledby="next-piece-title">
+                    <div class="preview-card__bar">
+                      <h2 id="next-piece-title">Next</h2>
+                    </div>
+                    <canvas
+                      class="preview-board"
+                      data-next-piece-board
+                      width="96"
+                      height="96"
+                      aria-label="Next Tetris piece preview"
+                    ></canvas>
+                  </section>
+
                   <dl class="scoreboard">
                     <div>
                       <dt>Status</dt>
@@ -146,6 +172,7 @@
 
                   <div class="game-actions">
                     <button class="action-button" type="button" data-game-start>Start game</button>
+                    <button class="action-button" type="button" data-game-hold>Hold</button>
                     <button class="action-button" type="button" data-game-pause>Pause</button>
                     <button class="action-button" type="button" data-game-restart>Restart</button>
                   </div>

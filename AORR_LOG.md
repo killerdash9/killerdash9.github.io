@@ -17,3 +17,20 @@
 - Fingerprint: `responsive-tetris-browser-200`.
 - Blocker: deployment approval still required before commit, push, or Pages publish.
 - Next step: wait for approval, then commit, push, and deploy.
+
+- Loop 6 status: PASSED.
+- Run mode: `CODEX_FALLBACK`; Claude model target: `Sonnet 5`.
+- Pre-change verifier: `claude auth status` returned not logged in in this shell.
+- Minimal act: added a transparent ghost landing preview via `getGhostPiece` in `game.js` and rendered it with reduced canvas opacity in `script.js`.
+- Post-change checks: `/private/tmp/ghost-preview.test.js`, existing Tetris state/engine/site-shell tests, `node --check game.js`, `node --check script.js`, and browser control checks at `375px/768px/1440px` all passed with no console errors.
+- Fingerprint: `ghost-preview-browser-200`.
+- Blocker: none for the change item; deployment approval remains the next gate.
+- Next step: return to deployment approval only.
+
+- Loop 7 status: PASSED.
+- Run mode: `CODEX_FALLBACK`; Claude model target: `Sonnet 5`.
+- Minimal act: added next-piece preview and Shift hold/save with matching UI and keyboard wiring.
+- Post-change checks: Tetris preview and hold tests, existing state/engine/site-shell tests, `node --check game.js`, `node --check script.js`, and browser checks at `375px/768px/1440px` all passed with no console errors.
+- Fingerprint: `next-hold-browser-200`.
+- Blocker: none for the change item; deployment approval is the next gate.
+- Next step: wait for deployment approval only.

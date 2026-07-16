@@ -159,3 +159,10 @@ Retry loop rules:
 - Use `CODEX_FALLBACK` only when Claude CLI cannot be used.
 - Record the fallback reason and whether fallback was used.
 - If fallback cannot verify with confidence, stop at `HITL_REQUIRED`.
+
+## 9. Next Execution Order
+
+1. Verify the current Tetris board has no next-piece preview or hold slot.
+2. Add the next-piece preview first.
+3. Add Shift-based hold/save behavior second.
+4. Re-verify the same browser widths and controls after each item.
